@@ -15,7 +15,7 @@ public interface CurrencyRepository extends JpaRepository<Currency, Long> {
       @Query(value = "SELECT char_code FROM tbl_currency b",  nativeQuery = true)
       List<Currency> getValute();
 
-      @Query(value = "SELECT * FROM tbl_currency b WHERE b.char_code LIKE %:charcode% AND b.date BETWEEN :first_date AND :second_date",  nativeQuery = true)
+      @Query(value = "SELECT char_code(SELECT TOP 1 value FROM currency WHERE charcode LIKE %:char_code% AND date LIKE %:first_date% OR date LIKE %:second_date% ORDER BY date DESC) / (SELECT char_code(SELECT TOP 1 value FROM currency WHERE charcode LIKE %:char_code% AND date LIKE %:first_date% OR date LIKE %:second_date% ORDER BY date ASC) -1 AS PersentChange FROM currency",  nativeQuery = true)
       List<Currency> getPersentValute(@Param("charcode") String charcode, @Param("first_date") Date first_date, @Param("second_date") Date second_date);
 
 }
