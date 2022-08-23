@@ -24,8 +24,7 @@ import java.util.List;
     public ScheduledTasks(TakeCurrencyService takeCurrencyService) {
         this.takeCurrencyService = takeCurrencyService;
     }
-        //@Scheduled(cron = "@daily")
-        @Scheduled(fixedRate = 20000000)
+        @Scheduled(cron = "@daily")
         public void CheckCurrency() throws IOException {
             List<Currency> currencies;
             Calendar start = Calendar.getInstance();
